@@ -41,7 +41,7 @@ void initGL()
 
 void update(int value) // value not used here as I am using the global "Display/Update ElapsedDeltaTime" to go over GLUTS API in the timer and display callbacks -PC
 {
-
+	game->Update(timer.getTime() - oldTime);
 	glutPostRedisplay();						// Post a paint request to activate display()
 	glutTimerFunc(refreshMillis, update, 0);
 	oldTime = timer.getTime();
@@ -52,7 +52,7 @@ void display()
 
 	glClear(GL_COLOR_BUFFER_BIT);	// Clear the color buffer
 	glMatrixMode(GL_MODELVIEW);		// To operate on the model-view matrix
-
+	game->Render();
 	glutSwapBuffers();				// Swap front and back buffers (of double buffered mode)
 }
 

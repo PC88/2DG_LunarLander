@@ -12,10 +12,10 @@ void Game::Load()
 {
 	char title[] = "2DG app";
 	char* ptrTitle = title;
-	int width, height;
 	width = 1000;
 	height = 1000;
 	window = new GameWindow(title, width, height, 0, 0);
+	
 
 	srand(time(NULL)); // maybe use this - PC
 }
@@ -30,7 +30,7 @@ void Game::Update(float dt)
 {
 	// update bs here - PC
 	
-
+	lander->Update(dt);
 	CheckCollisions();
 }
 
@@ -43,7 +43,7 @@ void Game::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);	// Clear the color buffer
 	glMatrixMode(GL_MODELVIEW);		// To operate on the model-view matrix
-
+	lander->Draw(width,height);
 	glutSwapBuffers();				// Swap front and back buffers (of double buffered mode)
 }
 

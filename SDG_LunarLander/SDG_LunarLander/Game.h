@@ -2,6 +2,7 @@
 #pragma once
 #include <vector>
 #include "GameWindow.h"
+#include "Lander.h"
 
 // Include Grid.h here
 
@@ -11,7 +12,9 @@ class Game
 {
 private:
 	GameWindow* window;
+	Lander* lander;
 
+	int width, height;
 
 	void CheckCollisions();
 

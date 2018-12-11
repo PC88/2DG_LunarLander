@@ -1,6 +1,16 @@
 #include "AABB.h"
 #include <iostream>
 
+AABB::AABB(glm::vec2& radii, glm::vec2& center, glm::vec2& vel, glm::vec2& acc, std::shared_ptr<Transform> tran)
+	:m_radii(radii), m_velocity(vel), m_acceleration(acc), m_AABBTransform(tran)
+{
+	move(center);
+}
+
+AABB::~AABB()
+{
+}
+
 void AABB::VelocityVerletSolver(float dt)
 {
 	move(dt * m_velocity + 0.5f * dt * dt * m_acceleration);
