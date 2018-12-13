@@ -12,7 +12,7 @@ class Game
 {
 private:
 	GameWindow* window;
-	Lander* lander;
+	std::shared_ptr<Lander> lander;
 
 	int width, height;
 

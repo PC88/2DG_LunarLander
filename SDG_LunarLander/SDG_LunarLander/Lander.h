@@ -17,6 +17,8 @@ public:
 
 	void move(glm::vec2 translation);
 
+	glm::vec2 ToGlutRefSystem(glm::vec2 p, int width, int height);
+
 	// Accessor functions -PC
 
 	float getHeight() const { return m_height; }
@@ -38,8 +40,9 @@ private:
 	glm::vec2 m_velocity;
 	glm::vec2 m_acceleration;
 	glm::vec2 m_AABBRadii;
+	glm::vec3 m_colour;
 
-	std::unique_ptr<AABB> m_AABB;
+	std::shared_ptr<AABB> m_AABB;
 	std::shared_ptr<Transform> m_LanderTransform;
 
 };

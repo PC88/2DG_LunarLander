@@ -15,7 +15,12 @@ void Game::Load()
 	width = 1000;
 	height = 1000;
 	window = new GameWindow(title, width, height, 0, 0);
-	
+	glm::vec2 tempVec(500,500);
+	glm::vec2 radii(30, 30);
+	glm::vec2 vel(0, 0);
+
+
+	lander = std::make_shared<Lander>(tempVec,vel,radii);
 
 	srand(time(NULL)); // maybe use this - PC
 }
@@ -43,7 +48,9 @@ void Game::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);	// Clear the color buffer
 	glMatrixMode(GL_MODELVIEW);		// To operate on the model-view matrix
+
 	lander->Draw(width,height);
+
 	glutSwapBuffers();				// Swap front and back buffers (of double buffered mode)
 }
 
