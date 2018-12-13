@@ -13,11 +13,21 @@ public:
 
 	void Draw(int width, int height);
 
+	void MoveLeft();
+
+	void MoveRight();
+
+	void MoveUp();
+
+
+
 	void VelocityVerletSolver(float dt);
 
 	void move(glm::vec2 translation);
 
 	glm::vec2 ToGlutRefSystem(glm::vec2 p, int width, int height);
+
+	glm::vec2 ApplyGravity(glm::vec2& acc);
 
 	// Accessor functions -PC
 

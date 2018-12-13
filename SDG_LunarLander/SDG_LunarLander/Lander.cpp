@@ -7,10 +7,11 @@ Lander::Lander( glm::vec2& acc, glm::vec2& vel, glm::vec2& AABBrad)
 {
 	srand(time(NULL));
 
-	float initX = 500.0f;//std::rand() % (1000 - 1);
-	float initY = 500.0f; // mess with this
+	float initX = std::rand() % (1000 - 1); // this is not seeding properly but it will do - PC
+	float initY = 900.0f; // this remains fixed
 	m_position = glm::vec2(initX, initY);
 	m_colour = glm::vec3(1, 1, 1);
+	m_fuel = 400;
 	m_LanderTransform = std::make_shared<Transform>();
 	m_LanderTransform->Translate(m_position);
 	m_AABB = std::make_shared<AABB>(m_AABBRadii,m_position,m_velocity,m_acceleration,m_LanderTransform);
@@ -23,10 +24,11 @@ Lander::~Lander()
 
 void Lander::Update(float dt)
 {
+	VelocityVerletSolver(dt);
 	m_AABB->update(dt);
 }
 
-void Lander::Draw(int width, int height) // this draw is just appended to the transform, and therfore the AABB
+void Lander::Draw(int width, int height) // this draw is just appended to the transform, and therefore the AABB
 {
 	m_position = m_LanderTransform->getPosition();
 	m_AABB->draw(width, height);
@@ -86,11 +88,38 @@ void Lander::Draw(int width, int height) // this draw is just appended to the tr
 	glFlush();
 }
 
+void Lander::MoveLeft()
+{
+	m_velocity = glm::vec2(m_velocity.x - 30, m_velocity.y);
+}
+
+void Lander::MoveRight()
+{
+	m_velocity = glm::vec2(m_velocity.x + 30, m_velocity.y);
+}
+
+void Lander::MoveUp()
+{
+	if (m_fuel > 0)
+	{
+		m_velocity = glm::vec2(m_velocity.x, m_velocity.y+ 90);
+		m_fuel -= 10;
+	}
+	else
+	{
+		return;
+	}
+}
+
 void Lander::VelocityVerletSolver(float dt)
 {
 	move(dt * getVelocity() + 0.5f * dt * dt * m_acceleration);
 	vec2 velInBetween = getVelocity() + 0.5f * dt * m_acceleration;
 	setVelocity(velInBetween + 0.5f * m_acceleration);
+	if (m_LanderTransform->getPosition().y > 1000)
+	{
+		m_velocity = glm::vec2(0, 0);
+	}
 }
 
 void Lander::move(glm::vec2 translation)
@@ -102,4 +131,9 @@ glm::vec2 Lander::ToGlutRefSystem(glm::vec2 p, int width, int height)
 {
 	glm::vec2 v((p.x / (width*0.5)) - 1, (p.y / (height*0.5)) - 1);
 	return v;
+}
+
+glm::vec2 Lander::ApplyGravity(glm::vec2 & acc)
+{
+	return acc += glm::vec2(0,-10);
 }

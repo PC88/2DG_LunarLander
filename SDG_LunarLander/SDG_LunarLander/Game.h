@@ -21,7 +21,9 @@ private:
 public:
 	void Load();
 	void Render();
-	void Inputs();
+	void MoveLanderLeft();
+	void MoveLanderRight();
+	void MoveLanderUp();
 	void Update(float dt);
 	void ReshapeWindow(int weigth, int height);
 
@@ -29,8 +31,6 @@ public:
 
 	virtual ~Game()
 	{
-
-
 		delete window;
 	}
 };

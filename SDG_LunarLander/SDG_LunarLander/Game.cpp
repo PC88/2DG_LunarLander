@@ -5,22 +5,21 @@
 #include <iostream>
 #include <time.h>
 
-using namespace std;
-using namespace glm;
 
 void Game::Load()
 {
 	char title[] = "2DG app";
+	float gravity = -5.0f;
 	char* ptrTitle = title;
 	width = 1000;
 	height = 1000;
 	window = new GameWindow(title, width, height, 0, 0);
-	glm::vec2 tempVec(500,500);
 	glm::vec2 radii(30, 30);
-	glm::vec2 vel(0, 0);
+	glm::vec2 vel(30, 20);
+	glm::vec2 acc(0, gravity); // this is fixed at -5
 
 
-	lander = std::make_shared<Lander>(tempVec,vel,radii);
+	lander = std::make_shared<Lander>(acc,vel,radii);
 
 	srand(time(NULL)); // maybe use this - PC
 }
@@ -54,6 +53,18 @@ void Game::Render()
 	glutSwapBuffers();				// Swap front and back buffers (of double buffered mode)
 }
 
-void Game::Inputs()
+void Game::MoveLanderLeft()
 {
+	lander->MoveLeft();
 }
+
+void Game::MoveLanderRight()
+{
+	lander->MoveRight();
+}
+
+void Game::MoveLanderUp()
+{
+	lander->MoveUp();
+}
+
