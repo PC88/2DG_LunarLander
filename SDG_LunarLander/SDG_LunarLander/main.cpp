@@ -70,7 +70,7 @@ void keyboard(unsigned char key, int x, int y)
 
 
 
-void update(int value) // value not used here as I am using the global "Display/Update ElapsedDeltaTime" to go over GLUTS API in the timer and display callbacks -PC
+void update(int value) 
 {
 	game->Update(timer.getTime() - oldTime);
 	glutPostRedisplay();						// Post a paint request to activate display()
@@ -102,7 +102,7 @@ int main(int argc, char** argv)
 {
 	game = new Game();
 	game->Load();
-	GLUTRenderer(); // This in a similar form - although not the same as LAB`s hence the Param. -PC
+	GLUTRenderer(); 
 
 	delete game;
 

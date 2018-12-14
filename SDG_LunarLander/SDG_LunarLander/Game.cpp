@@ -32,7 +32,7 @@ void Game::CheckCollisions()
 {
 	if (lander->getHeight() < 200  )
 	{
-		if (AABBAABBCollision(landingZone, lander) && glm::abs(lander->getVelocity().y) < m_breakUpVelocity )
+		if (AABBAABBCollision(landingZone, lander) && glm::abs(lander->getVelocity().y) < m_breakUpVelocity ) // checks values
 		{
 			lander->Win();
 		}
