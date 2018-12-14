@@ -9,14 +9,13 @@
 void Game::Load()
 {
 	char title[] = "2DG app";
-	float gravity = -5.0f;
 	char* ptrTitle = title;
 	width = 1000;
 	height = 1000;
 	window = new GameWindow(title, width, height, 0, 0);
 	glm::vec2 radii(30, 30);
 	glm::vec2 vel(30, 20);
-	glm::vec2 acc(0, gravity); // this is fixed at -5, acceleration is a constant multiplier hence the smae as classic integration.
+	glm::vec2 acc(0, m_gravity); // this is fixed at -5, acceleration is a constant multiplier hence the same as classic integration when applying the gravity continuously to velocity.
 
 	float min = 0;
 	float max = 200;
@@ -31,9 +30,9 @@ void Game::Load()
 
 void Game::CheckCollisions()
 {
-	if (lander->getPosition().y < 200)
+	if (lander->getHeight() < 200  )
 	{
-		if (AABBAABBCollision(landingZone, lander))
+		if (AABBAABBCollision(landingZone, lander) && glm::abs(lander->getVelocity().y) < m_breakUpVelocity )
 		{
 			lander->Win();
 		}
@@ -70,8 +69,6 @@ void Game::LoseCondition()
 
 void Game::Update(float dt)
 {
-	// update bs here - PC
-	
 	lander->Update(dt);
 	CheckCollisions();
 }

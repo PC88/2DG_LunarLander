@@ -25,6 +25,7 @@ Lander::~Lander()
 void Lander::Update(float dt)
 {
 	VelocityVerletSolver(dt);
+	std::cout << m_velocity.y << std::endl;
 }
 
 void Lander::Draw(int width, int height) // this draw is just appended to the transform, and therefore the AABB

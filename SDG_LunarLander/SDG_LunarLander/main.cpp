@@ -18,6 +18,7 @@ int refreshMillis = 16;      // Refresh period in milliseconds
 int width = 1000;
 int height = 1000;
 
+// Name: Peter Cannon, Banner ID: B00285279
 
 Game* game;
 LowResTimer timer;

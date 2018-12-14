@@ -40,6 +40,8 @@ public:
 
 	glm::vec2 getVelocity() const { return m_velocity; }
 	void setVelocity(glm::vec2 val) { m_velocity = val; }
+
+	float getHeight() const { return m_position.y; }
 private:
 
 	float m_fuel;

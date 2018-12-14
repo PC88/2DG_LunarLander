@@ -10,7 +10,7 @@ Terrain::Terrain(float minH, float maxH)
 	for (int i = 0; i < 20; i++)
 	{
 		float Yrand = std::rand() % (200 - 1); // apparently lerp does not exist in glm - it does, but.. it does not -, so im doing this instead -PC
-		points[i] = glm::vec2(start += widthInterval,Yrand);
+		m_points[i] = glm::vec2(start += widthInterval,Yrand);
 	}
 }
 
@@ -33,7 +33,7 @@ void Terrain::Draw(int width, int height)
 	glBegin(GL_LINE_STRIP);
 	for (int i = 0; i < 20; i++)
 	{
-		refsystPoints[i] = ToGlutRefSystem(points[i], width, height);
+		refsystPoints[i] = ToGlutRefSystem(m_points[i], width, height);
 	}
 	for (int i = 0; i < 20; i++)
 	{

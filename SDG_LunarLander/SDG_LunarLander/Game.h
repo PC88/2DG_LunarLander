@@ -24,6 +24,9 @@ private:
 	bool AABBAABBCollision(std::shared_ptr<SAABB> a, std::shared_ptr<Lander> b);
 	void WinCondition();
 	void LoseCondition();
+
+	float m_gravity = -5.0f;
+	float m_breakUpVelocity = 200.0f;
 public:
 	void Load();
 	void Render();

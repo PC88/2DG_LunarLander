@@ -21,9 +21,6 @@ private:
 	float m_maxHeight;
 	float m_minHeight;
 
-	glm::vec2 points[20];
-	glm::vec2 AABBtl;
-	glm::vec2 AABBtr;
-	std::shared_ptr<AABB> landingZone;
+	glm::vec2 m_points[20];
 };
 
