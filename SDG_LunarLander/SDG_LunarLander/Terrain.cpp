@@ -28,7 +28,7 @@ void Terrain::Draw(int width, int height)
 {
 
 	glLoadIdentity();
-	glColor3f(0, 1, 0);
+	glColor3f(1, 1, 1);
 	glm::vec2 refsystPoints[20];
 	glBegin(GL_LINE_STRIP);
 	for (int i = 0; i < 20; i++)

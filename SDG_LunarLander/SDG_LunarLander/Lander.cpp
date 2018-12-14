@@ -11,7 +11,7 @@ Lander::Lander( glm::vec2& acc, glm::vec2& vel, glm::vec2& AABBrad)
 	float initY = 900.0f; // this remains fixed
 	m_position = glm::vec2(initX, initY);
 	m_colour = glm::vec3(1, 1, 1);
-	m_fuel = 400;
+	m_fuel = 150;
 	m_LanderTransform = std::make_shared<Transform>();
 	m_LanderTransform->Translate(m_position);
 	m_AABB = std::make_shared<AABB>(m_AABBRadii,m_position,m_velocity,m_acceleration,m_LanderTransform);
@@ -122,7 +122,8 @@ void Lander::Lose()
 {
 	glm::vec2 cent(0, 700);
 	move(cent);
-	m_fuel = 400;
+	m_fuel = 150;
+	std::cout << "YOU LOSE!" << "\n";
 }
 
 void Lander::VelocityVerletSolver(float dt)
@@ -130,11 +131,6 @@ void Lander::VelocityVerletSolver(float dt)
 	move(dt * getVelocity() + 0.5f * dt * dt * m_acceleration);
 	vec2 velInBetween = getVelocity() + 0.5f * dt * m_acceleration;
 	setVelocity(velInBetween + 0.5f * m_acceleration);
-	if (m_LanderTransform->getPosition().y > 1000)
-	{
-		glm::vec2 height = glm::vec2(0, 500);
-		move(height);
-	}
 }
 
 void Lander::move(glm::vec2 translation)
