@@ -67,12 +67,7 @@ void keyboard(unsigned char key, int x, int y)
 		message += key;
 }
 
-// input stuff - PC
 
-void initGL()
-{
-	glClearColor(0.0, 0.0, 0.0, 1.0); // Set background (clear) color to black
-}
 
 void update(int value) // value not used here as I am using the global "Display/Update ElapsedDeltaTime" to go over GLUTS API in the timer and display callbacks -PC
 {
@@ -93,7 +88,7 @@ void display()
 
 void GLUTRenderer()
 {
-	initGL();
+	
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(special_keys);
 	glutReshapeFunc(reshape);		// Register callback handler for window re-shape

@@ -7,7 +7,7 @@ Lander::Lander( glm::vec2& acc, glm::vec2& vel, glm::vec2& AABBrad)
 {
 	srand(time(NULL));
 
-	float initX = std::rand() % (1000 - 1); // this is not seeding properly but it will do - PC
+	float initX = 500; // this is not seeding properly but it will do - PC
 	float initY = 900.0f; // this remains fixed
 	m_position = glm::vec2(initX, initY);
 	m_colour = glm::vec3(1, 1, 1);
@@ -25,7 +25,6 @@ Lander::~Lander()
 void Lander::Update(float dt)
 {
 	VelocityVerletSolver(dt);
-	m_AABB->update(dt);
 }
 
 void Lander::Draw(int width, int height) // this draw is just appended to the transform, and therefore the AABB
@@ -90,12 +89,12 @@ void Lander::Draw(int width, int height) // this draw is just appended to the tr
 
 void Lander::MoveLeft()
 {
-	m_velocity = glm::vec2(m_velocity.x - 30, m_velocity.y);
+	m_velocity = glm::vec2(m_velocity.x - 40, m_velocity.y);
 }
 
 void Lander::MoveRight()
 {
-	m_velocity = glm::vec2(m_velocity.x + 30, m_velocity.y);
+	m_velocity = glm::vec2(m_velocity.x + 40, m_velocity.y);
 }
 
 void Lander::MoveUp()
@@ -111,6 +110,21 @@ void Lander::MoveUp()
 	}
 }
 
+void Lander::Win()
+{
+	m_colour = glm::vec3(0, 1, 0);
+	m_velocity = glm::vec2(0, 0);
+	m_acceleration = glm::vec2(0, 0);
+	std::cout << "YOU WIN!" << "\n";
+}
+
+void Lander::Lose()
+{
+	glm::vec2 cent(0, 700);
+	move(cent);
+	m_fuel = 400;
+}
+
 void Lander::VelocityVerletSolver(float dt)
 {
 	move(dt * getVelocity() + 0.5f * dt * dt * m_acceleration);
@@ -118,7 +132,8 @@ void Lander::VelocityVerletSolver(float dt)
 	setVelocity(velInBetween + 0.5f * m_acceleration);
 	if (m_LanderTransform->getPosition().y > 1000)
 	{
-		m_velocity = glm::vec2(0, 0);
+		glm::vec2 height = glm::vec2(0, 500);
+		move(height);
 	}
 }
 
@@ -133,7 +148,7 @@ glm::vec2 Lander::ToGlutRefSystem(glm::vec2 p, int width, int height)
 	return v;
 }
 
-glm::vec2 Lander::ApplyGravity(glm::vec2 & acc)
+glm::vec2 Lander::getRadii()
 {
-	return acc += glm::vec2(0,-10);
+	return m_AABB->getRadii();
 }

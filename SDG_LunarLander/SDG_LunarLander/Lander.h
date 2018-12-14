@@ -19,7 +19,9 @@ public:
 
 	void MoveUp();
 
+	void Win();
 
+	void Lose();
 
 	void VelocityVerletSolver(float dt);
 
@@ -27,13 +29,9 @@ public:
 
 	glm::vec2 ToGlutRefSystem(glm::vec2 p, int width, int height);
 
-	glm::vec2 ApplyGravity(glm::vec2& acc);
+	glm::vec2 getRadii();
 
 	// Accessor functions -PC
-
-	float getHeight() const { return m_height; }
-	void setHeight(float val) { m_height = val; }
-
 	glm::vec2 getPosition() const { return m_position; }
 	void setPosition(glm::vec2 val) { m_position = val; }
 
@@ -45,7 +43,6 @@ public:
 private:
 
 	float m_fuel;
-	float m_height;
 	glm::vec2 m_position;
 	glm::vec2 m_velocity;
 	glm::vec2 m_acceleration;

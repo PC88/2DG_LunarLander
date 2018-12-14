@@ -4,7 +4,6 @@
 AABB::AABB(glm::vec2& radii, glm::vec2& center, glm::vec2& vel, glm::vec2& acc, std::shared_ptr<Transform> tran)
 	:m_radii(radii), m_velocity(vel), m_acceleration(acc), m_AABBTransform(tran)
 {
-	move(vel);
 	m_color = glm::vec3(0, 0, 1);
 }
 
@@ -12,22 +11,6 @@ AABB::~AABB()
 {
 }
 
-void AABB::VelocityVerletSolver(float dt)
-{
-	move(dt * m_velocity + 0.5f * dt * dt * m_acceleration);
-	vec2 velInBetween = m_velocity + 0.5f * dt * m_acceleration;
-	m_velocity = velInBetween + 0.5f * m_acceleration;
-}
-
-void AABB::move(vec2 traslation)
-{
-	m_AABBTransform->Translate(traslation);
-}
-
-void AABB::update(float dt)
-{
-	VelocityVerletSolver(dt);
-}
 
 void AABB::draw(int width, int height)
 {

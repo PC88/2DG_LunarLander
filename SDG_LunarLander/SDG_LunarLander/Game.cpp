@@ -16,17 +16,55 @@ void Game::Load()
 	window = new GameWindow(title, width, height, 0, 0);
 	glm::vec2 radii(30, 30);
 	glm::vec2 vel(30, 20);
-	glm::vec2 acc(0, gravity); // this is fixed at -5
+	glm::vec2 acc(0, gravity); // this is fixed at -5, acceleration is a constant multiplier hence the smae as classic integration.
 
-
+	float min = 0;
+	float max = 200;
 	lander = std::make_shared<Lander>(acc,vel,radii);
-
-	srand(time(NULL)); // maybe use this - PC
+	terrain = std::make_shared<Terrain>(min, max);
+	glm::vec2 zeroVec = glm::vec2(0.0f,0.0f);
+	float AAx = 700;
+	glm::vec2 LZradii(60, 30);
+	glm::vec2 AABBcen = glm::vec2(AAx, max + 20);
+	landingZone = std::make_shared<SAABB>(LZradii, AABBcen, zeroVec, zeroVec);
 }
 
 void Game::CheckCollisions()
 {
-	
+	if (lander->getPosition().y < 200)
+	{
+		if (AABBAABBCollision(landingZone, lander))
+		{
+			lander->Win();
+		}
+		lander->Lose();
+	}
+}
+
+bool Game::AABBAABBCollision(std::shared_ptr<SAABB> a, std::shared_ptr<Lander> b)
+{
+	if (abs(a->getCentre().x - b->getPosition().x) > (a->getRadii().x + b->getRadii()).x)
+	{
+		return false;
+	}
+	if (abs(a->getCentre().y - b->getPosition().y) > (a->getRadii().y + b->getRadii().y))
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+void Game::WinCondition()
+{
+	lander->Win();
+}
+
+void Game::LoseCondition()
+{
+	lander->Lose();
 }
 
 
@@ -49,8 +87,8 @@ void Game::Render()
 	glMatrixMode(GL_MODELVIEW);		// To operate on the model-view matrix
 
 	lander->Draw(width,height);
-
-	glutSwapBuffers();				// Swap front and back buffers (of double buffered mode)
+	terrain->Draw(width, height);
+	landingZone->draw(width, height);
 }
 
 void Game::MoveLanderLeft()
@@ -67,4 +105,7 @@ void Game::MoveLanderUp()
 {
 	lander->MoveUp();
 }
+
+
+
 

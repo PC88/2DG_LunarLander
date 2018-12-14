@@ -3,6 +3,8 @@
 #include <vector>
 #include "GameWindow.h"
 #include "Lander.h"
+#include "Terrain.h"
+#include "SAABB.h"
 
 // Include Grid.h here
 
@@ -13,11 +15,15 @@ class Game
 private:
 	GameWindow* window;
 	std::shared_ptr<Lander> lander;
+	std::shared_ptr<Terrain> terrain;
+	std::shared_ptr<SAABB> landingZone; 
 
 	int width, height;
 
 	void CheckCollisions();
-
+	bool AABBAABBCollision(std::shared_ptr<SAABB> a, std::shared_ptr<Lander> b);
+	void WinCondition();
+	void LoseCondition();
 public:
 	void Load();
 	void Render();
